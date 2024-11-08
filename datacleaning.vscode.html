@@ -17,45 +17,112 @@
         .upload-btn {
             margin: 10px 0;
             padding: 10px 20px;
+            font-family: Georgia, serif; /* Changing the font to Georgia */
             color: white;
             border: none;
             cursor: pointer;
+            /* Adding 3-D effect */
+            background-color: #333; /* Dark gray color */
+            box-shadow: 0 4px #666;
+            transition: all 0.3s ease;
         }
-        .json-btn { background-color: #f39c12; }
-        .csv-btn { background-color: #27ae60; }
-        .excel-btn { background-color: #2980b9; }
-        .pdf-btn { background-color: #e74c3c; }
-        .xml-btn { background-color: #8e44ad; }
-        .hierarchical-btn { background-color: #2c3e50; }
-        .plain-text-btn { background-color: #d35400; }
+        .upload-btn:active {
+            box-shadow: 0 2px #444;
+            transform: translateY(2px);
+        }
+
+        /* Darker shades on hover */
+        .upload-btn:hover { background-color: #444; }
+
+        /* Style for displaying selected file names */
+        .file-name {
+            font-family: Georgia, serif;
+            color: white;
+            margin-left: 10px;
+        }
+
+        /* Style for Submit button */
+        .submit-btn {
+            background-color: #007BFF; /* Blue color for submit button */
+            font-family: Georgia, serif;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            cursor: pointer;
+            box-shadow: 0 6px #0056b3;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        .submit-btn:active {
+            box-shadow: 0 4px #003d80;
+            transform: translateY(2px);
+        }
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <h1>Upload Your Data Files</h1>
     <form id="uploadForm" enctype="multipart/form-data">
         <input type="file" id="jsonFile" accept=".json" hidden>
-        <button type="button" class="upload-btn json-btn" onclick="document.getElementById('jsonFile').click()">Upload JSON File</button><br>
+        <button type="button" class="upload-btn" onclick="document.getElementById('jsonFile').click()">Upload JSON File</button>
+        <span id="jsonFileName" class="file-name"></span><br>
 
         <input type="file" id="csvFile" accept=".csv" hidden>
-        <button type="button" class="upload-btn csv-btn" onclick="document.getElementById('csvFile').click()">Upload CSV File</button><br>
+        <button type="button" class="upload-btn" onclick="document.getElementById('csvFile').click()">Upload CSV File</button>
+        <span id="csvFileName" class="file-name"></span><br>
 
         <input type="file" id="excelFile" accept=".xlsx" hidden>
-        <button type="button" class="upload-btn excel-btn" onclick="document.getElementById('excelFile').click()">Upload Excel File</button><br>
+        <button type="button" class="upload-btn" onclick="document.getElementById('excelFile').click()">Upload Excel File</button>
+        <span id="excelFileName" class="file-name"></span><br>
 
         <input type="file" id="pdfFile" accept=".pdf" hidden>
-        <button type="button" class="upload-btn pdf-btn" onclick="document.getElementById('pdfFile').click()">Upload PDF File</button><br>
+        <button type="button" class="upload-btn" onclick="document.getElementById('pdfFile').click()">Upload PDF File</button>
+        <span id="pdfFileName" class="file-name"></span><br>
 
         <input type="file" id="xmlFile" accept=".xml" hidden>
-        <button type="button" class="upload-btn xml-btn" onclick="document.getElementById('xmlFile').click()">Upload Office Open XML File</button><br>
+        <button type="button" class="upload-btn" onclick="document.getElementById('xmlFile').click()">Upload Office Open XML File</button>
+        <span id="xmlFileName" class="file-name"></span><br>
 
         <input type="file" id="hierarchicalFile" accept=".json,.xml" hidden>
-        <button type="button" class="upload-btn hierarchical-btn" onclick="document.getElementById('hierarchicalFile').click()">Upload Hierarchical Data File</button><br>
+        <button type="button" class="upload-btn" onclick="document.getElementById('hierarchicalFile').click()">Upload Hierarchical Data File</button>
+        <span id="hierarchicalFileName" class="file-name"></span><br>
 
         <input type="file" id="plainTextFile" accept=".txt" hidden>
-        <button type="button" class="upload-btn plain-text-btn" onclick="document.getElementById('plainTextFile').click()">Upload Plain Text File</button><br>
+        <button type="button" class="upload-btn" onclick="document.getElementById('plainTextFile').click()">Upload Plain Text File</button>
+        <span id="plainTextFileName" class="file-name"></span><br>
 
-        <button type="button" onclick="uploadFiles()">Submit</button>
+        <button type="button" class="submit-btn" onclick="uploadFiles()">Submit</button>
     </form>
-    <script src="app.js"></script>
+    <script>
+        // JavaScript to display file names
+        document.getElementById('jsonFile').addEventListener('change', function() {
+            document.getElementById('jsonFileName').textContent = this.files[0].name;
+        });
+        document.getElementById('csvFile').addEventListener('change', function() {
+            document.getElementById('csvFileName').textContent = this.files[0].name;
+        });
+        document.getElementById('excelFile').addEventListener('change', function() {
+            document.getElementById('excelFileName').textContent = this.files[0].name;
+        });
+        document.getElementById('pdfFile').addEventListener('change', function() {
+            document.getElementById('pdfFileName').textContent = this.files[0].name;
+        });
+        document.getElementById('xmlFile').addEventListener('change', function() {
+            document.getElementById('xmlFileName').textContent = this.files[0].name;
+        });
+        document.getElementById('hierarchicalFile').addEventListener('change', function() {
+            document.getElementById('hierarchicalFileName').textContent = this.files[0].name;
+        });
+        document.getElementById('plainTextFile').addEventListener('change', function() {
+            document.getElementById('plainTextFileName').textContent = this.files[0].name;
+        });
+
+        // JavaScript to alert when files are submitted
+        function uploadFiles() {
+            alert('Files have been submitted successfully!');
+        }
+    </script>
 </body>
 </html>
