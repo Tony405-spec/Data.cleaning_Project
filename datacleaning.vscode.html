@@ -1,122 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Upload Portal</title>
-    <style>
-        /* Updated CSS to include background image */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-            background-image: url('DataCleaningPic.jpg.png'); /* Replace with your image filename */
-            background-size: cover; /* Ensures the image covers the entire page */
-            background-repeat: no-repeat; /* Prevents the image from repeating */
-            background-attachment: fixed; /* Keeps the background fixed during scrolling */
-        }
-        .upload-btn, .submit-btn {
-            width: 250px; /* Set a consistent width */
-            height: 50px; /* Set a consistent height */
-            margin: 10px 0;
-            padding: 10px 20px;
-            font-family: Georgia, serif; /* Changing the font to Georgia */
-            color: white;
-            border: none;
-            cursor: pointer;
-            /* Adding 3-D effect */
-            box-shadow: 0 4px #666;
-            transition: all 0.3s ease;
-        }
-        .upload-btn {
-            background-color: #333; /* Dark gray color */
-        }
-        .upload-btn:active {
-            box-shadow: 0 2px #444;
-            transform: translateY(2px);
-        }
-        .upload-btn:hover { background-color: #444; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Highly Interactive Data Upload Portal</title>
+  <style>
+      /* Updated CSS for a compatible background */
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4; /* Light grey background for compatibility */
+          animation: fadeIn 1s ease-in; /* Fade in animation for the body */
+          color: #333; /* Dark text color for contrast */
+      }
 
-        /* Style for Submit button */
-        .submit-btn {
-            background-color: #007BFF; /* Blue color for submit button */
-            box-shadow: 0 6px #0056b3;
-            margin-top: 20px;
-        }
-        .submit-btn:active {
-            box-shadow: 0 4px #003d80;
-            transform: translateY(2px);
-        }
-        .submit-btn:hover { background-color: #0056b3; }
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
 
-        /* Style for displaying selected file names */
-        .file-name {
-            font-family: Georgia, serif;
-            color: white;
-            margin-left: 10px;
-        }
-    </style>
+      h1 {
+          text-align: center;
+          margin-top: 50px;
+          animation: slideIn 0.5s ease-out; /* Slide in animation for the header */
+          color: #007BFF; /* Blue color for the header */
+      }
+
+      @keyframes slideIn {
+          from { transform: translateY(-20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+      }
+
+      .container {
+          max-width: 600px;
+          margin: auto;
+          background: rgba(255, 255, 255, 0.9); /* Semi-transparent white for form */
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .upload-btn, .submit-btn {
+          width: 100%; /* Full width */
+          height: 50px; /* Set a consistent height */
+          margin: 10px 0;
+          padding: 10px;
+          font-family: Georgia, serif; /* Changing the font to Georgia */
+          color: white;
+          border: none;
+          cursor: pointer;
+          box-shadow: 0 4px #666;
+          transition: all 0.3s ease;
+          animation: popIn 0.5s ease; /* Pop in animation for buttons */
+      }
+
+      @keyframes popIn {
+          from { transform: scale(0); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+      }
+
+      .upload-btn {
+          background-color: #333; /* Dark gray color */
+      }
+      .upload-btn:hover { background-color: #444; }
+
+      /* Style for Submit button */
+      .submit-btn {
+          background-color: #007BFF; /* Blue color for submit button */
+          margin-top: 20px;
+      }
+      .submit-btn:hover { background-color: #0056b3; }
+
+      /* Style for displaying selected file names */
+      .file-name {
+          font-family: Georgia, serif;
+          color: #333; /* Dark color for file names */
+          margin-left: 10px;
+      }
+
+      /* Styles for drop area */
+      .drop-area {
+          border: 2px dashed #007BFF;
+          border-radius: 10px;
+          padding: 20px;
+          text-align: center;
+          color: #007BFF;
+          margin: 10px 0;
+          transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+      .drop-area.hover {
+          background-color: rgba(0, 123, 255, 0.2);
+          transform: scale(1.05); /* Scale effect on hover */
+      }
+
+      /* Loading spinner */
+      .spinner {
+          display: none;
+          margin: 20px auto;
+          border: 8px solid #f3f3f3; /* Light grey */
+          border-top: 8px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+      }
+
+      /* Notification styles */
+      .notification {
+          display: none;
+          padding: 10px;
+          margin: 10px 0;
+          border-radius: 5px;
+          color: white;
+      }
+      .success {
+          background-color: #28a745; /* Green */
+      }
+      .error {
+          background-color: #dc3545; /* Red */
+      }
+
+      /* Progress bar styles */
+      .progress-container {
+          width: 100%;
+          background: #e0e0e0;
+          border-radius: 5px;
+          margin-top: 10px;
+          height: 20px;
+          display: none; /* Hidden by default */
+      }
+      .progress-bar {
+          height: 100%;
+          width: 0;
+          background: #007BFF;
+          border-radius: 5px;
+          transition: width 0.4s ease;
+      }
+  </style>
 </head>
 <body>
-    <h1>Upload Your Data Files</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="jsonFile" accept=".json" hidden>
-        <button type="button" class="upload-btn" onclick="document.getElementById('jsonFile').click()">Upload JSON File</button>
-        <span id="jsonFileName" class="file-name"></span><br>
+  <h1>Upload Your Data Files</h1>
+  <div class="container">
+      <div class="drop-area" id="dropArea">Drag & Drop Files Here or Click to Upload</div>
+      <form id="uploadForm" enctype="multipart/form-data">
+          <input type="file" id="jsonFile" accept=".json" hidden>
+          <button type="button" class="upload-btn" onclick="document.getElementById('jsonFile').click()">Upload JSON File</button>
+          <span id="jsonFileName" class="file-name"></span><br>
 
-        <input type="file" id="csvFile" accept=".csv" hidden>
-        <button type="button" class="upload-btn" onclick="document.getElementById('csvFile').click()">Upload CSV File</button>
-        <span id="csvFileName" class="file-name"></span><br>
+          <input type="file" id="csvFile" accept=".csv" hidden>
+          <button type="button" class="upload-btn" onclick="document.getElementById('csvFile').click()">Upload CSV File</button>
+          <span id="csvFileName" class="file-name"></span><br>
 
-        <input type="file" id="excelFile" accept=".xlsx" hidden>
-        <button type="button" class="upload-btn" onclick="document.getElementById('excelFile').click()">Upload Excel File</button>
-        <span id="excelFileName" class="file-name"></span><br>
+          <input type="file" id="excelFile" accept=".xlsx" hidden>
+          <button type="button" class="upload-btn" onclick="document.getElementById('excelFile').click()">Upload Excel File</button>
+          <span id="excelFileName" class="file-name"></span><br>
 
-        <input type="file" id="pdfFile" accept=".pdf" hidden>
-        <button type="button" class="upload-btn" onclick="document.getElementById('pdfFile').click()">Upload PDF File</button>
-        <span id="pdfFileName" class="file-name"></span><br>
+          <input type="file" id="pdfFile" accept=".pdf" hidden>
+          <button type="button" class="upload-btn" onclick="document.getElementById('pdfFile').click()">Upload PDF File</button>
+          <span id="pdfFileName" class="file-name"></span><br>
 
-        <input type="file" id="xmlFile" accept=".xml" hidden>
-        <button type="button" class="upload-btn" onclick="document.getElementById('xmlFile').click()">Upload Office Open XML File</button>
-        <span id="xmlFileName" class="file-name"></span><br>
+          <input type="file" id="xmlFile" accept=".xml" hidden>
+          <button type="button" class="upload-btn" onclick="document.getElementById('xmlFile').click()">Upload Office Open XML File</button>
+          <span id="xmlFileName" class="file-name"></span><br>
 
-        <input type="file" id="hierarchicalFile" accept=".json,.xml" hidden>
-        <button type="button" class="upload-btn" onclick="document.getElementById('hierarchicalFile').click()">Upload Hierarchical Data File</button>
-        <span id="hierarchicalFileName" class="file-name"></span><br>
+          <input type="file" id="hierarchicalFile" accept=".json,.xml" hidden>
+          <button type="button" class="upload-btn" onclick="document.getElementById('hierarchicalFile').click()">Upload Hierarchical Data File</button>
+          <span id="hierarchicalFileName" class="file-name"></span><br>
 
-        <input type="file" id="plainTextFile" accept=".txt" hidden>
-        <button type="button" class="upload-btn" onclick="document.getElementById('plainTextFile').click()">Upload Plain Text File</button>
-        <span id="plainTextFileName" class="file-name"></span><br>
+          <input type="file" id="plainTextFile" accept=".txt" hidden>
+          <button type="button" class="upload-btn" onclick="document.getElementById('plainTextFile').click()">Upload Plain Text File</button>
+          <span id="plainTextFileName" class="file-name"></span><br>
 
-        <button type="button" class="submit-btn" onclick="uploadFiles()">Submit</button>
-    </form>
-    <script>
-        // JavaScript to display file names
-        document.getElementById('jsonFile').addEventListener('change', function() {
-            document.getElementById('jsonFileName').textContent = this.files[0].name;
-        });
-        document.getElementById('csvFile').addEventListener('change', function() {
-            document.getElementById('csvFileName').textContent = this.files[0].name;
-        });
-        document.getElementById('excelFile').addEventListener('change', function() {
-            document.getElementById('excelFileName').textContent = this.files[0].name;
-        });
-        document.getElementById('pdfFile').addEventListener('change', function() {
-            document.getElementById('pdfFileName').textContent = this.files[0].name;
-        });
-        document.getElementById('xmlFile').addEventListener('change', function() {
-            document.getElementById('xmlFileName').textContent = this.files[0].name;
-        });
-        document.getElementById('hierarchicalFile').addEventListener('change', function() {
-            document.getElementById('hierarchicalFileName').textContent = this.files[0].name;
-        });
-        document.getElementById('plainTextFile').addEventListener('change', function() {
-            document.getElementById('plainTextFileName').textContent = this.files[0].name;
-        });
+          <button type="button" class="submit-btn" onclick="uploadFiles()">Submit</button>
+      </form>
+      <div class="spinner" id="spinner"></div>
+      <div class="notification" id="notification"></div>
+      <div class="progress-container" id="progressContainer">
+          <div class="progress-bar" id="progressBar"></div>
+      </div>
+  </div>
+  <script>
+      // JavaScript to display file names
+      function handleFileSelect(inputId, displayId) {
+          const input = document.getElementById(inputId);
+          const display = document.getElementById(displayId);
+          input.addEventListener('change', function() {
+              if (this.files.length > 0) {
+                  display.textContent = this.files[0].name;
+              }
+          });
+      }
 
-        // JavaScript to alert when files are submitted
-        function uploadFiles() {
-            alert('Files have been submitted successfully!');
-        }
-    </script>
+      handleFileSelect('jsonFile', 'jsonFileName');
+      handleFileSelect('csvFile', 'csvFileName');
+      handleFileSelect('excelFile', 'excelFileName');
+      handleFileSelect('pdfFile', 'pdfFileName');
+      handleFileSelect('xmlFile', 'xmlFileName');
+      handleFileSelect('hierarchicalFile', 'hierarchicalFileName');
+      handleFileSelect('plainTextFile', 'plainTextFileName');
+
+      // Drag and drop functionality
+      const dropArea = document.getElementById('dropArea');
+      dropArea.addEventListener('click', () => document.getElementById('jsonFile').click());
+      dropArea.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropArea.classList.add('hover');
+      });
+      dropArea.addEventListener('dragleave', () => {
+          dropArea.classList.remove('hover');
+      });
+      dropArea.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropArea.classList.remove('hover');
+          const files = e.dataTransfer.files;
+          if (files.length > 0) {
+              document.getElementById('jsonFile').files = files; // Assign files to the hidden input
+              document.getElementById('jsonFileName').textContent = files[0].name; // Display file name
+          }
+      });
+
+      // JavaScript to alert when files are submitted
+      function uploadFiles() {
+          const spinner = document.getElementById('spinner');
+          const notification = document.getElementById('notification');
+          const progressContainer = document.getElementById('progressContainer');
+          const progressBar = document.getElementById('progressBar');
+
+          spinner.style.display = 'block'; // Show loading spinner
+          notification.style.display = 'none'; // Hide previous notifications
+          progressContainer.style.display = 'block'; // Show progress bar
+          progressBar.style.width = '0%'; // Reset progress bar
+
+          let progress = 0;
+          const interval = setInterval(() => {
+              if (progress >= 100) {
+                  clearInterval(interval);
+                  spinner.style.display = 'none'; // Hide loading spinner
+                  notification.textContent = 'Files have been submitted successfully!';
+                  notification.className = 'notification success';
+                  notification.style.display = 'block';
+              } else {
+                  progress += 10; // Simulate progress
+                  progressBar.style.width = progress + '%'; // Update progress bar
+              }
+          }, 200); // Simulate upload time
+      }
+
+      // Interactive feedback on file drop
+      dropArea.addEventListener('dragenter', () => {
+          dropArea.classList.add('hover');
+      });
+
+      // Reset the drop area style after drop
+      dropArea.addEventListener('dragleave', () => {
+          dropArea.classList.remove('hover');
+      });
+  </script>
 </body>
 </html>
+a few seconds ago
