@@ -1,43 +1,56 @@
-<!DOCTYPE html> <!-- Defines the document type and version of HTML (HTML5 in this case) -->
-<html lang="en"> <!-- Starts the HTML document and sets the language to English -->
+<!DOCTYPE html>/* Initializing the html code*/
+<html lang="en">
 <head>
-    <meta charset="UTF-8"> <!-- Specifies the character encoding for the document as UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures the web page is responsive by setting the viewport's width to the device’s width and initial scale -->
-    <title>Data Upload Portal</title> <!-- Sets the title of the web page, which appears in the browser tab -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Upload Portal</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 50px; } <!-- Sets the font for the body to Arial and applies a margin of 50px -->
-        .upload-btn { margin: 10px 0; padding: 10px 20px; color: white; border: none; cursor: pointer; } <!-- Defines a common style for all upload buttons with margin, padding, white text, no border, and a pointer cursor on hover -->
-        .json-btn { background-color: #f39c12; } <!-- Sets the background color for the JSON upload button -->
-        .csv-btn { background-color: #27ae60; } <!-- Sets the background color for the CSV upload button -->
-        .excel-btn { background-color: #2980b9; } <!-- Sets the background color for the Excel upload button -->
-        .pdf-btn { background-color: #e74c3c; } <!-- Sets the background color for the PDF upload button -->
-        .xml-btn { background-color: #8e44ad; } <!-- Sets the background color for the XML upload button -->
-        .hierarchical-btn { background-color: #2c3e50; } <!-- Sets the background color for the Hierarchical Data upload button -->
-        .plain-text-btn { background-color: #d35400; } <!-- Sets the background color for the Plain Text upload button -->
-    </style>
-</head>
-<body>
-    <h1>Upload Your Data Files</h1> <!-- Creates a heading for the page -->
-    <form id="uploadForm" enctype="multipart/form-data"> <!-- Defines a form for uploading files. The enctype attribute specifies how the form data should be encoded -->
-        <input type="file" id="jsonFile" accept=".json" hidden> <!-- Creates a hidden file input for uploading JSON files. The accept attribute restricts the file type -->
-        <button type="button" class="upload-btn json-btn" onclick="document.getElementById('jsonFile').click()">Upload JSON File</button><br> <!-- Creates a button for uploading JSON files. Clicking the button triggers the hidden file input -->
-        
-        <input type="file" id="csvFile" accept=".csv" hidden> <!-- Hidden file input for CSV files -->
-        <button type="button" class="upload-btn csv-btn" onclick="document.getElementById('csvFile').click()">Upload CSV File</button><br> <!-- Button for CSV files -->
-
-        <input type="file" id="excelFile" accept=".xlsx" hidden> <!-- Hidden file input for Excel files -->
-        <button type="button" class="upload-btn excel-btn" onclick="document.getElementById('excelFile').click()">Upload Excel File</button><br> <!-- Button for Excel files -->
-
-        <input type="file" id="pdfFile" accept=".pdf" hidden> <!-- Hidden file input for PDF files -->
-        <button type="button" class="upload-btn pdf-btn" onclick="document.getElementById('pdfFile').click()">Upload PDF File</button><br> <!-- Button for PDF files -->
-
-        <input type="file" id="xmlFile" accept=".xml" hidden> <!-- Hidden file input for XML files -->
-        <button type="button" class="upload-btn xml-btn" onclick="document.getElementById('xmlFile').click()">Upload Office Open XML File</button><br> <!-- Button for XML files -->
-
-        <input type="file" id="hierarchicalFile" accept=".json,.xml" hidden> <!-- Hidden file input for Hierarchical Data files -->
-        <button type="button" class="upload-btn hierarchical-btn" onclick="document.getElementById('hierarchicalFile').click()">Upload Hierarchical Data File</button><br> <!-- Button for Hierarchical Data files -->
-
-        <input type="file" id="plainTextFile" accept=".txt" hidden> <!-- Hidden file input for Plain Text files -->
-        <button type="button" class="upload-btn plain-text-btn" onclick="document.getElementById('plainTextFile').click()">Upload Plain Text File</button><br> <!-- Button for Plain Text files -->
-
-        <button type="button" onclick="uploadFiles()">
+        /* Ensures the font used throughout the body is Arial, with a sans-serif fallback */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; /* Removes default margin */
+            padding: 50px; /* Adds padding around the body content */
+            background-image: url('DataCleaningPic.jpg.png'); /* Sets the background image */
+            background-size: cover; /* Ensures the image covers the entire page */
+            background-repeat: no-repeat; /* Prevents the image from repeating */
+            background-attachment: fixed; /* Keeps the background fixed during scrolling */
+            display: flex; /* Uses Flexbox to center content */
+            justify-content: center; /* Centers content horizontally */
+            align-items: center; /* Centers content vertically */
+            height: 100vh; /* Sets the height to fill the viewport */
+        }
+        /* Styles for the container element */
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            padding: 20px; /* Adds padding inside the container */
+            border-radius: 10px; /* Rounds the corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+            text-align: center; /* Centers text */
+            animation: fadeIn 1s ease-in-out; /* Applies the fade-in animation */
+        }
+        /* Keyframes for the fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); } /* Starts with lower opacity and slightly smaller size */
+            to { opacity: 1; transform: scale(1); } /* Ends with full opacity and original size */
+        }
+        /* Styles for the heading */
+        h1 {
+            color: #333; /* Dark gray color */
+            margin-bottom: 20px; /* Space below the heading */
+            transition: color 0.3s ease; /* Smooth color transition on hover */
+        }
+        h1:hover {
+            color: #007BFF; /* Changes color on hover */
+        }
+        /* General styles for buttons */
+        .upload-btn, .submit-btn {
+            width: 100%; /* Full width */
+            max-width: 250px; /* Maximum width of 250px */
+            height: 50px; /* Fixed height */
+            margin: 10px 0; /* Margin above and below */
+            padding: 10px 20px; /* Padding inside the button */
+            font-family: Georgia, serif; /* Font style */
+            color: white; /* Text color */
+            border: none; /* Removes default border */
+            cursor: pointer; /* Changes cursor to pointer on hover */
+            box-shadow: 0 4px #666; /* 3D effect
